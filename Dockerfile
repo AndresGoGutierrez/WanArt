@@ -1,17 +1,17 @@
-# Usar JDK 17
+# Usar OpenJDK 17
 FROM openjdk:17-jdk-slim
 
-# Carpeta de trabajo dentro del contenedor
+# Crear carpeta de trabajo dentro del contenedor
 WORKDIR /app
 
-# Copiar todo el proyecto al contenedor
+# Copiar solo los archivos necesarios
 COPY . .
 
-# Construir la app con Maven
-RUN ./mvnw clean package -DskipTests
+# Dar permisos al Maven Wrapper y construir la app
+RUN chmod +x mvnw && ./mvnw clean package -DskipTests
 
-# Puerto que expondrá la app (Render lo sobreescribe con PORT)
+# Exponer puerto (Render lo sobreescribe con PORT)
 EXPOSE 8080
 
 # Comando para arrancar la app
-CMD ["java", "-jar", "target/Sistema-Galeria-0.0.1-SNAPSHOT.jar"]
+CMD ["sh", "-c", "java -jar target/*.jar"]
