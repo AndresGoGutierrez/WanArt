@@ -1,0 +1,211 @@
+/*Seccion banner*/
+
+.container-banner{
+    width: 100%;
+    height: 400px;
+    display: flex;
+    justify-content: left;
+    align-items: end;
+    background: black;
+}
+
+.container-banner .title-banner{
+    margin-left: 25px;
+    margin-bottom: 25px;
+}
+
+.container-banner .title-banner h1{
+    color: white;
+}
+
+/*-------------------------------------------------------------------------------------------*/
+
+.contenedor_exposiciones{
+    width: 100%;
+    background-color: black;
+    display: flex;
+    flex-direction: column;
+}
+
+.contenedor_exposiciones .divisor-1{
+    width: 100%;
+    max-width: 1200px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 100px;
+    padding-top: 45px;
+}
+
+
+.contenedor_exposiciones .divisor-1 .caja{
+    display: flex;
+    flex-direction: column;
+
+}
+
+.contenedor_exposiciones .divisor-1 .caja_2{
+    display: flex;
+    flex-direction: row;
+}
+
+
+.contenedor_exposiciones .divisor-1 .caja h2{
+    color: white;
+    margin-bottom: 25px;
+    font-family: 'Righteous';
+    font-size: 40px;
+}
+
+.contenedor_exposiciones .divisor-1 .caja p{
+    color: #efefef;
+    margin-bottom: 10px;
+    text-align: justify;
+}
+
+.contenedor_exposiciones .divisor-1 .iconos_expo{
+    display: flex;
+    flex-direction: column;
+}
+
+.contenedor_exposiciones .divisor-1 .info_expo{
+    display: flex;
+    flex-direction: column;
+    letter-spacing: 1px;
+}
+
+.contenedor_exposiciones .divisor-1 .info_expo div{
+    border-bottom: 0.2px solid white;
+}
+
+.contenedor_exposiciones .divisor-1 .info_expo h3{
+    color: white;
+}
+
+.contenedor_exposiciones .divisor-1 .info_expo .cuadro_separacion{
+    margin-top: 5px;
+}
+
+
+.contenedor_exposiciones .divisor-1 .iconos_expo a{
+    display: inline-block;
+    text-decoration: none;
+    cursor: auto;
+    width: 45px;
+    height: 45px;
+    line-height: 45px;
+    color: white;
+    margin-right: 10px;
+    margin-bottom: 18px;
+    border-radius: 40%;
+    text-align: center;
+    transition: all 300ms ease;
+}
+
+/*Sección artistas*/
+
+.servidores{
+    background-color: black;
+    color: white;
+    padding: 4% 20px;
+
+}
+
+.servidores .contenido-seccionR{
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    align-items: start;
+    max-width: 1100px;
+    margin: auto;
+}
+
+.servidores h2{
+    font-size: 48px;
+    font-family: 'Righteous';
+    text-align: center;
+    padding: 20px 0;
+
+}
+
+.servidores .galeria{
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.servidores .galeria .proyecto{
+    position: relative;
+    max-width: 200px;
+    height: auto;
+    margin: 10px;
+    cursor: pointer;
+}
+
+.servidores .galeria .proyecto a{
+    text-decoration: none;
+}
+
+.servidores .galeria .proyecto .hipervinculo{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+
+.servidores .galeria .proyecto p{
+    text-align: justify;
+    margin: 0px 22px;
+    line-height: 1.4em;
+}
+
+.servidores .galeria .proyecto img{
+    width: 100%;
+    min-width: 150px;
+    max-width: 200px;
+    max-height: 150px;
+    display: block;
+    border-radius: 60%;
+}
+
+.servidores .galeria .proyecto .overlay-a{
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 60%;
+    text-align: center;
+    background: linear-gradient(rgba(0,0,0,.8), rgba(0,0,0,.8));
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: 1s;
+    font-size: 10px;
+    letter-spacing: 3px;
+    opacity: 0;
+}
+
+.servidores .galeria .proyecto .overlay-a a{
+    text-decoration: none;
+    color: white;
+    border: 2px solid white;
+    border-radius: 5px;
+    width: 35%;
+    padding: 3px;
+    margin-top: 3px;
+}
+
+.servidores .galeria .proyecto .overlay-a h3{
+    margin-bottom: 20px;
+    transition: 1s;
+}
+
+.servidores .galeria .proyecto .overlay-a:hover{
+    opacity: 1;
+}
+
+.servidores .galeria .proyecto .overlay-a:hover h3{
+    font-size: 20px;
+}

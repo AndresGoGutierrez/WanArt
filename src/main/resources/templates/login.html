@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Title</title>
+</head>
+<body>
+<!--Sección formulario-->
+<section class="bg-black min-h-screen flex items-center justify-center">
+    <div class="bg-gray-100 flex rounded-2xl shadow-lg max-w-4xl p-5 items-center">
+        <div class="sm:block hidden w-[380px]">
+            <img class="rounded-2xl" th:src="@{/images/banner_login.jpg}" alt="imagen">
+        </div>
+        <div class="sm:w-1/2 px-16">
+            <form action="" th:action="@{/login}" method="post" class="flex flex-col gap-4">
+                <div>
+                    <span th:if="${error}" class="text-red-500">[[${error}]]</span>
+                    <span th:if="${logout}" class="text-sky-500">[[${logout}]]</span>
+                    <h2 style="font-size: 35px; font-family: 'Righteous', serif;"
+                        class="font-bold text-2xl text-black">Inicio de Sesión</h2>
+                </div>
+                <div class="flex flex-col gap-4 text-start">
+                    <label for="username" style="font-size: 15px; font-family: 'Righteous', serif;" class="mt-2">Correo</label>
+                    <input type="text" id="username" name="username" th:value="${emailUsr}" required
+                           placeholder="Ingresa tu correo"
+                           pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+                           maxlength="100"
+                           title="Debe ser un correo válido con un máximo de 100 caracteres"
+                           class="p-2 border-2 border-black-500 rounded-xl">
+                </div>
+                <div class="flex flex-col gap-4 text-start relative">
+                    <label for="password" style="font-size: 15px; font-family: 'Righteous', serif;" class="mt-2">Contraseña</label>
+                    <input type="password" id="password" name="password" th:value="${contrasenaUsr}" required
+                           placeholder="Ingresa tu contraseña"
+                           class="p-2 border-2 border-black-500 rounded-xl">
+                    <!-- Icono para mostrar/ocultar contraseña -->
+                    <button type="button" onclick="VerPassword()"
+                            class="absolute right-3 bottom-4 text-sky-400 hover:text-sky-500 focus:outline-none btn">Ver
+                    </button>
+                </div>
+                <div class="text-gray-500">
+                    <span>Si no tienes cuenta, <a style="cursor: pointer;"
+                                                  th:href="@{/register}"
+                                                  class="hover:text-sky-500 hover:underline
+                                                  transition-all underline-offset-4">Regístrate ahora</a></span>
+                </div>
+                <button class="bg-black rounded-xl text-white py-2 hover:scale-105 duration-300" type="submit" >Iniciar Sesión</button>
+            </form>
+        </div>
+
+    </div>
+</section>
+
+<script>
+    function VerPassword() {
+        const passwordField = document.getElementById("password");
+        if (passwordField.type === "password") {  //compara datos y tipos también
+            passwordField.type = "text";
+        } else {
+            passwordField.type = "password";
+        }
+    }
+</script>
+<script th:src="@{/js/script.js}"></script>
+</body>
+</html>

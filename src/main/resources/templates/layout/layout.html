@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+<body>
+    <!--Menu encabezado-->
+    <div class="contenedor-header" th:fragment="nav_bar">
+        <header>
+            <div class="logo">
+                <a href="#">WanArt</a>
+            </div>
+            <nav id="nav">
+                <ul>
+                    <li><a th:href="@{/}" onclick="seleccionar()">INICIO</a></li>
+                    <li><a th:href="@{/artista}"  onclick="seleccionar()" sec:authorize="isAuthenticated()">ARTISTAS</a></li>
+                    <li><a th:href="@{/filtroObra}" onclick="seleccionar()" sec:authorize="isAuthenticated()">OBRAS</a></li>
+                    <li><a th:href="@{/exposicion}" onclick="seleccionar()" sec:authorize="isAuthenticated()">EXPOSICIONES</a></li>
+                    <li><a th:href="@{/about}" onclick="seleccionar()" hidden="hidden">ABOUT</a></li>
+                </ul>
+            </nav>
+            <div class="function">
+                <ul>
+                    <form th:action="@{logout}" method="post">
+                        <a sec:authorize="isAuthenticated()" onclick="this.parentNode.submit();"><i class="fa-solid fa-right-from-bracket" style="color: #ffffff; cursor: pointer"></i></a>
+                    </form>
+                    <a th:href="@{/login}" sec:authorize="isAnonymous()"><i class="fa-solid fa-user" style="color: #ffffff; margin: 0 15px; cursor: pointer"></i></a>
+                    <a th:href="@{/register}" sec:authorize="isAnonymous()"><i class="fa-solid fa-plus" style="color: #ffffff; cursor: pointer"></i></a>
+                </ul>
+            </div>
+            <div class="nav-responsive" onclick="mostrarOcultarMenu()">
+                <i class="fa-solid fa-bars"></i>
+            </div>
+        </header>
+    </div>
+
+    <!--Menu Nuevo Registro-->
+    <div class="contenedor_nuevo" th:fragment="nuevo_registro">
+        <a th:href="@{${urlRegistro}}" class="cambiar_color">Agregar registro</a>
+    </div>
+
+    <!--Pie de pagina-->
+    <footer class="pie-pagina" th:fragment="pie_pagina">
+        <div class="grupo-1">
+            <div class="box-p">
+                <figure>
+                    <a href="#">
+                        <img th:src="@{/images/logo_wanart.png}" alt="Logo footer" />
+                    </a>
+                </figure>
+            </div>
+            <div class="box-p">
+                <h2>WanArt</h2>
+                <p>
+                    WanArt es un espacio dedicado a la celebración de la creatividad y la expresión artística. Aquí, exploramos una diversa colección de obras de artistas emergentes y consagrados, abarcando múltiples estilos y disciplinas.
+                </p>
+            </div>
+            <div class="box-p">
+                <h2>REDES SOCIALES</h2>
+                <div class="red-social">
+                    <a href="#"><i class="fa-brands fa-facebook"></i></a>
+                    <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
+                    <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="grupo-2">
+            <small>&copy; 2024 <b>Andrés Gómez - Alejandro Higuera</b> - Derechos Reservados.</small>
+        </div>
+    </footer >
+</body>
+</html>

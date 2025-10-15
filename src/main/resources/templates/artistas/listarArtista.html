@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" th:href="@{/css/listarArtista.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Title</title>
+</head>
+<body>
+
+  <!--Menu encabezado-->
+  <div th:replace="~{layout/layout :: nav_bar}" ></div>
+
+  <!--Menu registro-->
+  <div th:replace="~{layout/layout :: nuevo_registro}" sec:authorize="hasRole('ADMINISTRADOR')"></div>
+
+
+
+  <!--Sección artistas-->
+  <div class="servidores pt-[3%]" id="servidores">
+    <div class="contenido-seccionR">
+      <h2>Artistas</h2>
+        <!--Sección filtro busqueda-->
+        <form th:action="@{/artista}" method="get" class="flex gap-4 mb-4">
+            <div class="p-4 text-gray-600 dark:text-gray-300 outline-none focus:outline-none">
+                <div class="relative flex">
+                    <select id="tipoFiltro" name="filterType" class="bg-white dark:bg-black h-10 px-5 rounded-l-full text-sm focus:outline-none outline-none border-2 border-gray-500 dark:border-gray-500 border-r-1 cursor-pointer max-h-10 overflow-y-hidden">
+                        <option value="artista" th:selected="${filterType=='artista'}" class="font-medium cursor-pointer">Artista</option>
+                        <option value="disciplina" th:selected="${filterType=='disciplina'}" class="font-medium cursor-pointer">Disciplina</option>
+                        <option value="genero" th:selected="${filterType=='genero'}" class="font-medium cursor-pointer">Genero</option>
+                    </select>
+                    <input type="text" id="filtroBuscar" name="searchTerm" placeholder="Search" class="bg-white dark:bg-black h-10 flex px-5 w-full rounded-r-full dark:text-white focus:outline-none border-2 border-l-0 border-gray-500 dark:border-gray-600" th:value="${searchTerm}" />
+                    <button type="submit" class="absolute inset-y-0 right-0 mr-2 flex items-center px-2">
+                        <svg class="h-4 w-4 fill-current dark:text-white" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px" viewBox="0 0 56.966 56.966" xml:space="preserve" width="512px" height="512px"><path d="M55.146,51.887L41.588,37.786c3.486-4.144,5.396-9.358,5.396-14.786c0-12.682-10.318-23-23-23s-23,10.318-23,23  s10.318,23,23,23c4.761,0,9.298-1.436,13.177-4.162l13.661,14.208c0.571,0.593,1.339,0.92,2.162,0.92  c0.779,0,1.518-0.297,2.079-0.837C56.255,54.982,56.293,53.08,55.146,51.887z M23.984,6c9.374,0,17,7.626,17,17s-7.626,17-17,17  s-17-7.626-17-17S14.61,6,23.984,6z" /></svg>
+                    </button>
+                </div>
+            </div>
+        </form>
+        <!--------------------------->
+        <div class="galeria">
+        <div class="proyecto" th:each="artista:${artistas}">
+          <img th:src="${artista.fotoArtista}" th:alt="${artista.fotoArtista}" />
+          <div class="overlay-a">
+              <h3>[[${artista.nombreArt} + ' ' + ${artista.apellidoArt}]]</h3>
+              <p>[[${artista.generoArtistico}]]</p>
+              <a th:href="@{/detalleArtista/}+${artista.idArtista}">Ver</a>
+              <a th:href="@{/editarArtista/}+${artista.idArtista}" sec:authorize="hasRole('ADMINISTRADOR')">Editar</a>
+              <a href="#" sec:authorize="hasRole('ADMINISTRADOR')" th:attr="onclick = 'confirmarEliminacionA('+ ${artista.idArtista}+')'">Eliminar</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!--Pie de pagina-->
+  <footer th:replace="~{layout/layout :: pie_pagina}" ></footer>
+
+  <script th:src="@{/js/script.js}"></script>
+
+</body>
+</html>

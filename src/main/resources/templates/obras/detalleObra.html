@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" th:href="@{/css/detalleObra.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <title>Title</title>
+</head>
+<body>
+    <!--Menu encabezado-->
+    <div th:replace="~{layout/layout :: nav_bar}" ></div>
+
+    <div class="project-container">
+        <div class="project">
+            <div class="project-content">
+                <div class="project-label">[[${detalleO.clasificacionObra}]]</div>
+                <h4 class="project-title">[[${detalleO.tituloObra}]]</h4>
+                <div class="project-details">
+                    <p>[[${detalleO.descripcionObra}]]</p>
+                    <div class="footer-section">
+                        <div class="container">
+                            <div class="footer-cta pt-5 pb-5">
+                                <div class="row">
+                                    <div class="col-xl-4 col-md-4 mb-30">
+                                        <div class="single-cta">
+                                            <div class="cta-text">
+                                                <h4>Exposiciones:</h4>
+                                                <div th:each="exposicion : ${exposiciones}">
+                                                    <i class="fas fa-map-marker-alt"></i>
+                                                    <span th:text="${exposicion.tituloExpo}"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-4 col-md-4 mb-30">
+                                        <div class="single-cta">
+                                            <i class="fas fa-phone"></i>
+                                            <div class="cta-text">
+                                                <h4>Tipo de obra: </h4>
+                                                <span>[[${detalleO.clasificacionObra}]]</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-4 col-md-4 mb-30">
+                                        <div class="single-cta">
+                                            <i class="far fa-envelope-open"></i>
+                                            <div class="cta-text">
+                                                <h4>Año de publicación: </h4>
+                                                <span>[[${detalleO.anoCreacion}]]</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-4 col-md-4 mb-30">
+                                        <div class="single-cta">
+                                            <i class="fas fa-phone"></i>
+                                            <div class="cta-text">
+                                                <h4>Dimensiones: </h4>
+                                                <span>[[${detalleO.dimensionesObra}]]</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="servidores" id="servidores">
+                        <div class="contenido-seccionR">
+                            <h2>Artista:</h2>
+                            <div class="galeria">
+                                <div class="proyecto" th:each="artista : ${artistas}">
+                                    <a class="hipervinculo" th:href="@{/detalleArtista/}+${artista.idArtista}">
+                                        <img th:src="${artista.fotoArtista}"  th:alt="${artista.fotoArtista}"/>
+                                        <div class="overlay-a">
+                                            <h3>[[${artista.nombreArt} + ' ' + ${artista.apellidoArt}]]</h3>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="project-img">
+                <img th:src="@{${detalleO.fotoObra}}" alt="" />
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <!--Pie de pagina-->
+    <footer th:replace="~{layout/layout :: pie_pagina}" ></footer>
+
+
+    <script>
+        let menuVisible = false;
+        //Función que oculta o muestra el menu
+        function mostrarOcultarMenu(){
+            if(menuVisible){
+                document.getElementById("nav").classList ="";
+                menuVisible = false;
+            } else {
+                document.getElementById("nav").classList ="responsive";
+                menuVisible = true;
+            }
+        }
+
+        function seleccionar(){
+            //Oculta el menu una vez que selecciono una opcion
+            document.getElementById("nav").classList = "";
+            menuVisible = false;
+        }
+
+
+    </script>
+</body>
+</html>

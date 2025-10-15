@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Title</title>
+</head>
+<body>
+<!--Sección formulario-->
+<section class="bg-black min-h-screen flex items-center justify-center">
+    <div class="bg-gray-100 flex rounded-2xl shadow-lg max-w-4xl p-5 items-center">
+        <div class="sm:w-1/2 px-16">
+            <h2 style="font-size: 35px; font-family: 'Righteous', serif;"
+                class="font-bold text-2xl text-black">[[${title}]]</h2>
+            <form th:object="${usuario}"
+                  th:action="@{/register}"
+                  method="post" enctype="multipart/form-data" class="flex flex-col gap-4">
+                <label style="font-size: 15px; font-family: 'Righteous', serif;" class="mt-4" for="nombreU">*Nombre:</label>
+                <input class="p-2 border-2 border-black-500 rounded-xl" type="text" name="nombreU" id="nombreU" placeholder="Ingrese su nombre de usuario" th:field="*{nombreUsr}" maxlength="70" required="true"/>
+
+                <label style="font-size: 15px; font-family: 'Righteous', serif;" class="mt-4" for="telefonoU">*Telefono:</label>
+                <input class="p-2 border-2 border-black-500 rounded-xl" type="number" name="telefonoU" id="telefonoU" placeholder="Ingrese su número de telefono" th:field="*{telefonoUsr}" oninput="if(this.value.length > 10) this.value = this.value.slice(0, 10);"  required="true"/>
+
+                <label style="font-size: 15px; font-family: 'Righteous', serif;" class="mt-2" for="correoUsuario">*Email:</label>
+                <input class="p-2 border-2 border-black-500 rounded-xl" type="email" name="correoUsuario" id="correoUsuario" placeholder="Ingrese su correo" th:field="*{emailUsr}" maxlength="200" required="true"/>
+
+                <label style="font-size: 15px; font-family: 'Righteous', serif;" class="mt-2" for="claveUsuario">*Contraseña:</label>
+                <input class="p-2 border-2 border-black-500 rounded-xl" type="password" name="claveUsuario" id="claveUsuario" placeholder="Ingrese su contraseña" th:field="*{contrasenaUsr}" required="true"/>
+
+                <label style="font-size: 15px; font-family: 'Righteous', serif;" class="mt-2" for="confirmarClave">*Confirmar Contraseña:</label>
+                <input class="p-2 border-2 border-black-500 rounded-xl" type="password" name="confirmarClave" id="confirmarClave" placeholder="Ingrese nuevamente su contraseña" required="true"/>
+
+                <button class="bg-black rounded-xl text-white py-2 hover:scale-105 duration-300" type="submit" >Crear Usuario</button>
+            </form>
+        </div>
+        <div class="sm:block hidden w-[380px]">
+            <img class="rounded-2xl" th:src="@{/images/banner_register2.jpg}" alt="imagen">
+        </div>
+    </div>
+</section>
+
+<script th:src="@{/js/script.js}"></script>
+</body>
+</html>

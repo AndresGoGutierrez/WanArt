@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Title</title>
+</head>
+<body>
+
+    <!--Menu encabezado-->
+    <div th:replace="~{layout/layout :: nav_bar}" ></div>
+
+    <!--Sección formulario-->
+    <section class="bg-black min-h-screen flex items-center justify-center">
+        <div class="bg-gray-100 flex rounded-2xl shadow-lg max-w-4xl p-5 items-center mt-[120px]">
+            <div class="sm:w-1/2 px-16">
+                <h2 class="font-bold text-2xl text-black">[[${title}]]</h2>
+                <form th:object="${artistas}"
+                      th:action="@{/editarArtista/{id}(id=${artistas.idArtista})}"
+                      method="post" enctype="multipart/form-data" class="flex flex-col gap-4">
+                    <input type="hidden" th:field="*{idArtista}">
+                    <label style="font-size: 15px; font-family: 'Righteous', serif;" class="mt-4" for="nombreA">*Nombre:</label>
+                    <input class="p-2 border-2 border-black-500 rounded-xl" type="text" name="nombreA" id="nombreA" placeholder="David Alejandro" th:field="*{nombreArt}" maxlength="70" required="true"/>
+
+                    <label style="font-size: 15px; font-family: 'Righteous', serif;" class="mt-2" for="apellidoA">*Apellido:</label>
+                    <input class="p-2 border-2 border-black-500 rounded-xl" type="text" name="apellidoA" id="apellidoA" placeholder="Chaparro Camargo" th:field="*{apellidoArt}" maxlength="70" required="true"/>
+
+                    <label style="font-size: 15px; font-family: 'Righteous', serif;" class="mt-2" for="nacionalidadA">*Nacionalidad:</label>
+                    <input class="p-2 border-2 border-black-500 rounded-xl" type="text" name="nacionalidadA" id="nacionalidadA" placeholder="Colombian(@)" th:field="*{nacionalidadArt}" maxlength="100" required="true"/>
+
+                    <label style="font-size: 15px; font-family: 'Righteous', serif;" class="mt-2" for="fechaN">*Fecha de nacimiento:</label>
+                    <input class="p-2 border-2 border-black-500 rounded-xl" type="date" name="fechaN" id="fechaN" placeholder="2002/07/07" th:field="*{fechaNacimiento}" required="true"/>
+
+                    <label style="font-size: 15px; font-family: 'Righteous', serif;" class="mt-2" for="disciplinaArtistica">*Seleccionar Disciplina:</label>
+                    <select class="bg-transparent py-1 border-b border-sky-900 focus:border-sky-200 transition-all focus:scale-105 focus:font-normal"
+                            id="disciplinaArtistica" name="disciplinaArtistica">
+                        <option value="" th:field="*{disciplinaArtistica}" disabled selected></option> <!-- Opción vacía por defecto -->
+                        <option value="pintura" th:text="'Pintura'" th:selected="${artistas.disciplinaArtistica == 'pintura'}"></option>
+                        <option value="dibujo" th:text="'Dibujo'" th:selected="${artistas.disciplinaArtistica == 'dibujo'}"></option>
+                        <option value="fotografia" th:text="'Fotografía'" th:selected="${artistas.disciplinaArtistica == 'fotografia'}"></option>
+                    </select>
+
+
+                    <label style="font-size: 15px; font-family: 'Righteous', serif;" class="mt-2" for="generoArtistico">*Seleccionar el genero artistico:</label>
+                    <select class="bg-transparent py-1 border-b border-sky-900 focus:border-sky-200 transition-all focus:scale-105 focus:font-normal"
+                            id="generoArtistico" name="generoArtistico">
+                        <option value="" th:field="*{generoArtistico}" disabled selected></option> <!-- Opción vacía por defecto -->
+                        <option value="retrato" th:text="'Retrato'" th:selected="${artistas.generoArtistico == 'retrato'}"></option>
+                        <option value="abstracto" th:text="'Abstracto'" th:selected="${artistas.generoArtistico == 'abstracto'}"></option>
+                        <option value="naturaleza" th:text="'Naturaleza'" th:selected="${artistas.generoArtistico == 'naturaleza'}"></option>
+                        <option value="paisaje" th:text="'Paisaje'" th:selected="${artistas.generoArtistico == 'paisaje'}"></option>
+                    </select>
+
+                    <label style="font-size: 15px; font-family: 'Righteous', serif;" class="mt-2" for="redSocial">*Redes Sociales:</label>
+                    <input class="p-2 border-2 border-black-500 rounded-xl" type="text" name="redSocial" id="redSocial" placeholder="X" th:field="*{redSocial}" maxlength="60" required="true"/>
+
+                    <label style="font-size: 15px; font-family: 'Righteous', serif;" class="mt-2" for="foto">*Foto artista:</label>
+                    <input class="p-2 border-2 border-black-500 rounded-xl" type="file" name="foto" id="foto" placeholder="Archivo de... "  maxlength="1000" required="true" accept="image/*"/>
+                    <img class="img-thumbnail" id="previewImage" alt="Imagen subida" th:src="${artistas.fotoArtista != null ? artistas.fotoArtista : '/perfil_5.jpg'}" style="max-width: 300px; margin: 20px auto; border: 1px solid rgb(15,15,15);">
+                    <div id="error" style="color: red"></div>
+                    <button class="bg-black rounded-xl text-white py-2 hover:scale-105 duration-300" type="submit" >Editar Artista</button>
+                </form>
+            </div>
+            <div class="sm:block hidden w-[1000px]">
+                <img class="rounded-2xl" th:src="@{/images/baner_artista-editar.png}" alt="">
+            </div>
+        </div>
+    </section>
+
+    <script>
+        const fileInput = document.getElementById('foto');
+        const previewImage = document.getElementById('previewImage');
+        const errorMessage = document.getElementById('error');
+        const maxSizeInMB = 20000; // Cambia el límite de tamaño aquí (en MB).
+
+        fileInput.addEventListener('change', (event) => {
+            const file = event.target.files[0];
+            if (file) {
+                // Verificar el tamaño del archivo
+                if (file.size > maxSizeInMB * 1024 * 1024) {
+                    errorMessage.textContent = `El archivo debe ser menor o
+                igual a ${maxSizeInMB} MB.`;
+                    previewImage.style.display = 'none';
+                    fileInput.value = ''; // Limpiar la selección del archivo inválido
+                    fileInput.disabled = false; // Habilitar el input nuevamente
+                } else {
+                    errorMessage.textContent = '';
+                    const reader = new FileReader();
+
+                    reader.onload = (e) => {
+                        previewImage.src = e.target.result;
+                        previewImage.style.display = 'block';
+                    };
+
+                    reader.readAsDataURL(file);
+                }
+            }
+        });
+    </script>
+    <script th:src="@{/js/script.js}"></script>
+</body>
+</html>

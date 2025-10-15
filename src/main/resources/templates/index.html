@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" th:href="@{/css/index.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <title>WanArt - Galería Virtual</title>
+</head>
+<body>
+
+<!--Menu encabezado-->
+    <div th:replace="~{layout/layout :: nav_bar}" ></div>
+
+<!--Carrusel de imagenes-->
+    <section class="container">
+        <div class="slider-wrapper">
+            <div class="slider">
+                <h1>WanArt - Galería de arte</h1>
+                <img th:src="@{/images/baner_artista.jpg}" id="slide-1" alt="">
+            </div>
+        </div>
+    </section>
+
+
+
+<!--Sección de obras de arte nuevas-->
+<section id="card-area">
+    <div class="card-title">
+        <h1>Lo último en nuestra galería</h1>
+    </div>
+    <div class="wrapper">
+        <div class="arriba">
+            <div class="box-area contenedor-superior" th:each="obra : ${obrasSup}">
+                <div class="box">
+                    <img class="w-1/3 h-auto rounded" th:src="${obra.fotoObra}" th:alt="${obra.fotoObra}">
+                    <div class="overlay">
+                        <h3>[[${obra.tituloObra}]]</h3>
+                        <a class="hipervinculo" th:href="@{/detalleObra/{id}(id=${obra.idObra})}">Ir a la obra</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="abajo">
+            <div class="box-area contenedor-inferior" th:each="obra : ${obrasInf}">
+                <div class="box">
+                    <img class="w-1/3 h-auto rounded" th:src="${obra.fotoObra}" th:alt="${obra.fotoObra}">
+                    <div class="overlay">
+                        <h3>[[${obra.tituloObra}]]</h3>
+                        <a class="hipervinculo" th:href="@{/detalleObra/{id}(id=${obra.idObra})}">Ir a la obra</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--Sección artistas-->
+<div class="servidores" id="servidores">
+    <div class="contenido-seccionR">
+        <h2>Artistas</h2>
+        <div class="galeria">
+            <div class="proyecto" th:each="art : ${artistaPop}">
+                <img class="w-1/3 h-auto rounded" th:src="${art.key.getFotoArtista()}" th:alt="${art.key.getFotoArtista()}">
+                <div class="overlay-a">
+                    <a class="hipervinculo" th:href="@{/detalleArtista/{id}(id=${art.key.idArtista})}">
+                        <h3>[[${art.key.nombreArt} + ' ' + ${art.key.apellidoArt}]]</h3>
+                        <h4>[[${art.key.generoArtistico}]]</h4>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Pie de pagina-->
+    <footer th:replace="~{layout/layout :: pie_pagina}" ></footer>
+
+    <script th:src="@{/js/script.js}"></script>
+</body>
+</html>

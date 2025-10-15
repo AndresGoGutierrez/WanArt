@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <title>Title</title>
+</head>
+<body>
+
+  <!--Menu encabezado-->
+  <div th:replace="~{layout/layout :: nav_bar}" ></div>
+
+  <!--Seccion Crear-->
+  <section class="bg-black min-h-screen flex items-center justify-center">
+    <div class="bg-gray-100 flex rounded-2xl shadow-lg max-w-3xl p-5 items-center mt-[120px]">
+      <div class="sm:block hidden w-[1000px]">
+        <img class="rounded-2xl" th:src="@{/images/img_vertical-exposicion2.jpeg}" alt="No carga">
+      </div>
+      <div class="sm:w-1/2 px-16">
+        <h2 class="font-bold text-2xl text-black">[[${title}]]</h2>
+        <form th:object="${exposiciones}"
+              th:action="@{crearExposicion}"
+              method="post" enctype="multipart/form-data" class="flex flex-col gap-4">
+          <label style="font-size: 15px; font-family: 'Righteous', serif;" class="mt-4" for="tituloE">*Titulo Exposición:</label>
+          <input class="p-2 border-2 border-black-500 rounded-xl" type="text" name="tituloE" id="tituloE" placeholder="Exposición de arte la colonial" th:field="*{tituloExpo}" maxlength="70" required="true"/>
+
+          <label style="font-size: 15px; font-family: 'Righteous', serif;" class="mt-2" for="descripcionE">*Descripción:</label>
+          <textarea style="resize: none" class="p-2 border-2 border-black-500 rounded-xl" name="descripcionE" id="descripcionE" placeholder="Exposición de arte contemporaneo" th:field="*{descripcionExpo}" maxlength="100000" required="true"></textarea>
+
+          <label style="font-size: 15px; font-family: 'Righteous', serif;" class="mt-2" for="fechaI">*Fecha inicio:</label>
+          <input class="p-2 border-2 border-black-500 rounded-xl" type="date" name="fechaI" id="fechaI" placeholder="2024/07/07" th:field="*{fechaInicio}" required="true"/>
+
+          <label style="font-size: 15px; font-family: 'Righteous', serif;" class="mt-2" for="fechaF">*Fecha Fin:</label>
+          <input class="p-2 border-2 border-black-500 rounded-xl" type="date" name="fechaF" id="fechaF" placeholder="2024/07/08" th:field="*{fechaFin}" required="true"/>
+
+          <label style="font-size: 15px; font-family: 'Righteous', serif;" class="mt-2" for="aforoE">*Aforo:</label>
+          <input class="p-2 border-2 border-black-500 rounded-xl" type="number" name="aforoE" id="aforoE" placeholder="224" th:field="*{aforo}" min="1" max="1000" required="true"/>
+
+          <label style="font-size: 15px; font-family: 'Righteous', serif;" class="mt-2" for="obras">*Seleccionar obras:</label>
+          <select class="bg-transparent py-1 border-b border-sky-900 focus:border-sky-200 transition-all focus:scale-105 focus:font-normal" id="obras" name="obras" th:field="*{obras}" multiple="multiple">
+            <option th:each="obras: ${listaObras}" th:value="${obras.idObra}" th:text="${obras.tituloObra} + ' - ' + ${obras.clasificacionObra}">
+            </option>
+          </select>
+
+          <label style="font-size: 15px; font-family: 'Righteous', serif;" class="mt-2" for="ubicacionE">*Ubicación:</label>
+          <input class="p-2 border-2 border-black-500 rounded-xl" type="text" name="ubicacionE" id="ubicacionE" placeholder="Parque las americas, 554 Cl 43" th:field="*{ubicacion}" maxlength="1000" required="true"/>
+
+          <label style="font-size: 15px; font-family: 'Righteous', serif;" class="mt-2" for="foto">*Foto exposición:</label>
+          <input class="p-2 border-2 border-black-500 rounded-xl" type="file" name="foto" id="foto" placeholder="Archivo de... "  maxlength="1000" required="true" accept="image/*"/>
+          <img class="img-thumbnail" id="previewImage" alt="Imagen subida" src="" style="max-width: 300px; margin: 20px auto; border: 1px solid rgb(15,15,15);">
+          <div id="error" style="color: red"></div>
+
+          <button class="bg-black rounded-xl text-white py-2 hover:scale-105 duration-300" type="submit" >Crear Exposición</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    const fileInput = document.getElementById('foto');
+    const previewImage = document.getElementById('previewImage');
+    const errorMessage = document.getElementById('error');
+    const maxSizeInMB = 20000; // Cambia el límite de tamaño aquí (en MB).
+
+    fileInput.addEventListener('change', (event) => {
+      const file = event.target.files[0];
+      if (file) {
+        // Verificar el tamaño del archivo
+        if (file.size > maxSizeInMB * 1024 * 1024) {
+          errorMessage.textContent = `El archivo debe ser menor o
+                igual a ${maxSizeInMB} MB.`;
+          previewImage.style.display = 'none';
+          fileInput.value = ''; // Limpiar la selección del archivo inválido
+          fileInput.disabled = false; // Habilitar el input nuevamente
+        } else {
+          errorMessage.textContent = '';
+          const reader = new FileReader();
+
+          reader.onload = (e) => {
+            previewImage.src = e.target.result;
+            previewImage.style.display = 'block';
+          };
+
+          reader.readAsDataURL(file);
+        }
+      }
+    });
+  </script>
+  <script th:src="@{/js/script.js}"></script>
+</body>
+</html>

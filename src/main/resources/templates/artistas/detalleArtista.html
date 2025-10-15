@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" th:href="@{/css/detalleArtista.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <title>Title</title>
+</head>
+<body>
+    <!--Menu encabezado-->
+    <div th:replace="~{layout/layout :: nav_bar}" ></div>
+
+<!--Seccion banner-->
+    <section class="container-banner bg-violet-900 text-white flex justify-center items-center h-screen w-screen"
+            th:style="'background-image: url('+@{/images/baner_artista.jpg}+');
+                background-size:cover; background-position:center; backdrop-filter:blur(2px)'">
+        <div class="title-banner">
+            <h1 class="text-3xl font-bold uppercase mb-6 ">[[${title}]]</h1>
+        </div>
+    </section>
+
+<!--Seccion detalle info artista-->
+    <div class="contenedor_artista">
+        <div class="divisor-1">
+            <div class="caja">
+                <h2>[[${detalleA.nombreArt} + ' ' + ${detalleA.apellidoArt}]]</h2>
+                <img th:src="@{${detalleA.fotoArtista}}" th:alt="${detalleA.fotoArtista}">
+            </div>
+            <div class="caja caja_2">
+                <div class="iconos_expo">
+                    <a href="#"><i class="fa-solid fa-flag"></i></a>
+                    <a href="#"><i class="fa-regular fa-calendar"></i></a>
+                    <a href="#"><i class="fa-solid fa-paintbrush"></i></a>
+                    <a href="#"><i class="fa-solid fa-wand-magic-sparkles"></i></a>
+                    <a href="#"><i class="fa-brands fa-meta"></i></a>
+                </div>
+                <div class="info_expo">
+                    <div class="cuadro">
+                        <h3>Nacionalidad:</h3>
+                        <p>[[${detalleA.nacionalidadArt}]]</p>
+                    </div>
+                    <div class="cuadro_separacion">
+                        <h3>Fecha de nacimiento:</h3>
+                        <p>[[${detalleA.fechaNacimiento}]]</p>
+                    </div>
+                    <div class="cuadro_separacion">
+                        <h3>Disciplina artistica:</h3>
+                        <p>[[${detalleA.disciplinaArtistica}]]</p>
+                    </div>
+                    <div class="cuadro_separacion">
+                        <h3>Género artistico:</h3>
+                        <p>[[${detalleA.generoArtistico}]]</p>
+                    </div>
+                    <div class="cuadro_separacion">
+                        <h3>Redes sociales::</h3>
+                        <p>[[${detalleA.redSocial}]]</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!--Seccion obras asociadas-->
+    <div class="servidores" id="servidores">
+        <div class="contenido-seccionR">
+            <h2>Obras</h2>
+            <div class="galeria">
+                <div class="proyecto" th:each="obra : ${obras}">
+                    <a class="hipervinculo" th:href="@{/detalleObra/}+${obra.idObra}">
+                        <img th:src="${obra.fotoObra}" th:alt="${obra.tituloObra}" />
+                        <div class="overlay-a">
+                            <h3>[[${obra.tituloObra}]]</h3>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Pie de pagina-->
+    <footer th:replace="~{layout/layout :: pie_pagina}" ></footer>
+
+<script>
+    let menuVisible = false;
+    //Función que oculta o muestra el menu
+    function mostrarOcultarMenu(){
+        if(menuVisible){
+            document.getElementById("nav").classList ="";
+            menuVisible = false;
+        } else {
+            document.getElementById("nav").classList ="responsive";
+            menuVisible = true;
+        }
+    }
+
+    function seleccionar(){
+        //Oculta el menu una vez que selecciono una opcion
+        document.getElementById("nav").classList = "";
+        menuVisible = false;
+    }
+
+
+</script>
+
+</body>
+</html>

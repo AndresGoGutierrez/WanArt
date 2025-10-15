@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" th:href="@{/css/clasificacionObra.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <title>Title</title>
+</head>
+<body>
+    <!--Menu encabezado-->
+    <div th:replace="~{layout/layout :: nav_bar}" ></div>
+
+    <!--Sección Clasificación-->
+    <section class="contenedor-obraclasi">
+        <h1 class="contenedor-title">[[${title}]]</h1>
+        <section class="contenedor-clasificacion" th:action="@{/Califi}" method="get">
+            <div class="card-clasi" th:style="'background-image: url('+@{/images/clasificacion_fotografia.jpg}+');
+                background-size:cover; background-position:center; backdrop-filter:blur(2px)'">
+                <div class="contenido-card">
+                    <h2>Fotografía</h2>
+                    <a th:href="@{/clasificacionObra/fotografia}" class="btn">Ver detalles</a>
+                </div>
+            </div>
+            <div class="card-clasi" th:style="'background-image: url('+@{/images/clasificacion_pintura.jpg}+');
+                background-size:cover; background-position:center; backdrop-filter:blur(2px)'">
+                <div class="contenido-card">
+                    <h2>Pintura</h2>
+                    <a th:href="@{/clasificacionObra/pintura}" class="btn">Ver detalles</a>
+                </div>
+            </div>
+            <div class="card-clasi" th:style="'background-image: url('+@{/images/clasificacion_dibujo.jpg}+');
+                background-size:cover; background-position:center; backdrop-filter:blur(2px)'">
+                <div class="contenido-card">
+                    <h2>Dibujo</h2>
+                    <a th:href="@{/clasificacionObra/dibujo}" class="btn">Ver detalles</a>
+                </div>
+            </div>
+
+        </section>
+    </section>
+
+    <!--Pie de pagina-->
+    <footer th:replace="~{layout/layout :: pie_pagina}" ></footer>
+
+
+    <script>
+        let menuVisible = false;
+        //Función que oculta o muestra el menu
+        function mostrarOcultarMenu(){
+            if(menuVisible){
+                document.getElementById("nav").classList ="";
+                menuVisible = false;
+            } else {
+                document.getElementById("nav").classList ="responsive";
+                menuVisible = true;
+            }
+        }
+
+        function seleccionar(){
+            //Oculta el menu una vez que selecciono una opcion
+            document.getElementById("nav").classList = "";
+            menuVisible = false;
+        }
+
+
+    </script>
+</body>
+</html>
