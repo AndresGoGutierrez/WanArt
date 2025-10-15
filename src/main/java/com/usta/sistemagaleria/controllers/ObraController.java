@@ -283,7 +283,7 @@ public class ObraController {
                 obraService.deleteById(id);
             }
         }else{
-            return "redirect:/error500";
+            return "error500";
         }
         return "redirect:/filtroObra";
     }

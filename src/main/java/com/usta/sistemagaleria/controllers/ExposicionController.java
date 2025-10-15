@@ -162,7 +162,7 @@ public class ExposicionController {
                 exposicionService.deleteById(id);
             }
         } else {
-            return "redirect:/error500";
+            return "error500";
         }
         return "redirect:/exposicion";
     }

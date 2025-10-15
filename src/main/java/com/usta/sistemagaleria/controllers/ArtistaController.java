@@ -136,7 +136,7 @@ public class ArtistaController {
                 artistaService.deleteById(id);
             }
         } else {
-            return "redirect:/error500";
+            return "error500";
         }
         return "redirect:/artista";
     }
