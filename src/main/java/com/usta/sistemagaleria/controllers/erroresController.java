@@ -19,7 +19,7 @@ public class erroresController implements ErrorController {
             return "error404";
         }
         if (statusCode == HttpStatus.INTERNAL_SERVER_ERROR.value()) {
-            return "/error500";
+            return "error500";
         }
         return "error";
     }
