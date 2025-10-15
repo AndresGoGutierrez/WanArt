@@ -2,18 +2,18 @@
 FROM maven:3.9.3-eclipse-temurin-17 AS build
 WORKDIR /app
 
-# Copiar pom y src
+# Copiar pom.xml y src completos
 COPY pom.xml .
 COPY src ./src
 
-# Generar jar (con templates y recursos)
+# Generar jar
 RUN mvn clean package -DskipTests
 
-# Stage 2: Runtime con OpenJDK
+# Stage 2: Runtime
 FROM openjdk:17-jdk-slim
 WORKDIR /app
 
-# Copiar solo el jar generado desde el stage de build
+# Copiar solo el jar desde el stage de build
 COPY --from=build /app/target/*.jar app.jar
 
 # Exponer puerto
