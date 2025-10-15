@@ -4,8 +4,13 @@ FROM openjdk:17-jdk-slim
 # Crear carpeta de trabajo dentro del contenedor
 WORKDIR /app
 
-# Copiar solo los archivos necesarios
-COPY . .
+# Copiar Maven Wrapper y configuración
+COPY mvnw .
+COPY .mvn .mvn
+COPY pom.xml .
+
+# Copiar solo el código fuente
+COPY src src
 
 # Dar permisos al Maven Wrapper y construir la app
 RUN chmod +x mvnw && ./mvnw clean package -DskipTests
@@ -14,4 +19,4 @@ RUN chmod +x mvnw && ./mvnw clean package -DskipTests
 EXPOSE 8080
 
 # Comando para arrancar la app
-CMD ["sh", "-c", "java -jar target/*.jar"]
+CMD ["java", "-jar", "target/Sistema-Galeria-0.0.1-SNAPSHOT.jar"]
